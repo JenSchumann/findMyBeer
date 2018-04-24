@@ -3,8 +3,60 @@
   <head>
     <meta charset="utf-8">
     <title>Find My Beer</title>
+      <script src="/app.js" charset="utf-8"></script>
   </head>
   <body>
+
     <h1>I Will Find My Beer</h1>
+    <div id="output">Beer</div>
+    <input type="text" id="searchBreweryDB">
+    <input type="button" id="search" value="Find My Beer">
+    <div id="output1"></div>
   </body>
+
+
+  <script type="text/javascript">
+
+  window.onload = init;
+  var beerResponse = {};
+
+          function init(){
+              document.getElementById('search').addEventListener('click',ySearch,false);
+          }
+
+          function ySearch(){
+              var searchTerm = document.getElementById('searchBreweryDB').value;
+
+              searchTerm = encodeURIComponent(searchTerm);
+              var url = 'http://api.brewerydb.com/v2/search/?beerId&key=e2cf6d182fcd977a76875b349ab92f69&q='+searchTerm;
+              getJSON(url,function(response){
+                 console.log(response);
+                 // beerResponse = response;
+
+                  // showResults(data.items);
+              })
+          }
+
+          function getJSON(url,callback){
+            var xhr = new XMLHttpRequest();
+            xhr.open('get',url,true);
+              xhr.setRequestHeader("Content-type", "application/json");
+              //AJAX call:
+
+
+
+              xhr.responseType = 'json';
+              xhr.onload = function(){
+                  if(xhr.status ==200){
+                      callback(xhr.response)
+                  }
+              }
+              xhr.send();
+          }
+
+
+
+
+
+  </script>
 </html>
