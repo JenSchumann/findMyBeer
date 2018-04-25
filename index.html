@@ -3,6 +3,22 @@
   <head>
     <meta charset="utf-8">
     <title>Find My Beer</title>
+    <style media="screen">
+    .box{
+      width: 40%;
+      height: 40%;
+      font-size: 1.5em;
+      background-color: aliceblue;
+      border: 1px solid black;
+      padding: 10px;
+      margin: 10px;
+      /* display: block; */
+  }
+
+  body{
+    display: inline-block;
+  }
+    </style>
       <script src="/app.js" charset="utf-8"></script>
   </head>
   <body>
@@ -19,32 +35,70 @@
 
   window.onload = init;
   var beerResponse = {};
+  var b = {};
+  var page = 0;
+  var output = document.getElementById('output1');
+  var beerName = "";
 
           function init(){
-              document.getElementById('search').addEventListener('click',ySearch,false);
+              document.getElementById('search').addEventListener('click',bSearch,false);
           }
 
-          function ySearch(){
+          function bSearch(){
               var searchTerm = document.getElementById('searchBreweryDB').value;
 
               searchTerm = encodeURIComponent(searchTerm);
               var url = 'http://api.brewerydb.com/v2/search/?beerId&key=e2cf6d182fcd977a76875b349ab92f69&q='+searchTerm;
               getJSON(url,function(response){
-                 console.log(response);
-                 // beerResponse = response;
-
-                  // showResults(data.items);
+                 // console.log(response.data);
+                 beerResponse = response.data;
+                 buildPage();
               })
           }
+
+          function buildPage(){
+            var html = "";
+              for(var i = 0; i < beerResponse.length; i++){
+                //need to create conditionals for beers that do not have undefined properties ("not available"?)
+                var beerName = beerResponse[i].name;
+                // console.log(beerName);
+                var beerDescription = beerResponse[i].description;
+                // console.log(beerDescription);
+                var beerIbu = beerResponse[i].ibu;
+                // console.log(beerIbu);
+                var beerAbv = beerResponse[i].abv;
+                // console.log(beerAbv);
+                //keep getting error when trying to show style name or shortName on page
+                // var beerStyle = beerResponse[i].style.name;
+                // console.log(beerStyle);
+
+                html +=  '<div class="box"><h2>Beer Name: '+beerName+'</h2><br><h4>Description: '+beerDescription+'</h4><br><h4>IBU: '+beerIbu+'</h4><br><h4>ABV: '+beerAbv+'</h4><br><input type="button" id="sBeer" onclick="saveBeer(beerResponse)" value="Save"></div>';
+
+
+                document.getElementById('output1').innerHTML = html;
+
+
+              }
+            }
+            //this returns the entire search object by that term.. need to drill it down to the object to be saved (the one beer)
+            function saveBeer(beerResponse){
+              // console.log(beerResponse);
+              console.log('save beer button pushed');
+            }
+
+
+
+
+
+
+
+
+
 
           function getJSON(url,callback){
             var xhr = new XMLHttpRequest();
             xhr.open('get',url,true);
               xhr.setRequestHeader("Content-type", "application/json");
-              //AJAX call:
-
-
-
               xhr.responseType = 'json';
               xhr.onload = function(){
                   if(xhr.status ==200){
