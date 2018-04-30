@@ -3,23 +3,11 @@
   <head>
     <meta charset="utf-8">
     <title>Find My Beer</title>
-    <style media="screen">
-    .box{
-      width: 40%;
-      height: 40%;
-      font-size: 1.5em;
-      background-color: aliceblue;
-      border: 1px solid black;
-      padding: 10px;
-      margin: 10px;
-      /* display: block; */
-  }
+    <!-- Styles -->
+    <link rel="stylesheet" href="main.css">
 
-  body{
-    display: inline-block;
-  }
-    </style>
-      <script src="/app.js" charset="utf-8"></script>
+    <!-- Scripts -->
+    <script src="app.js" charset="utf-8"></script>
   </head>
   <body>
 
@@ -39,6 +27,7 @@
   var page = 0;
   var output = document.getElementById('output1');
   var beerName = "";
+  var myBeers = [];
 
           function init(){
               document.getElementById('search').addEventListener('click',bSearch,false);
@@ -50,7 +39,7 @@
               searchTerm = encodeURIComponent(searchTerm);
               var url = 'http://api.brewerydb.com/v2/search/?beerId&key=e2cf6d182fcd977a76875b349ab92f69&q='+searchTerm;
               getJSON(url,function(response){
-                 // console.log(response.data);
+                 console.log(response.data);
                  beerResponse = response.data;
                  buildPage();
               })
@@ -71,8 +60,9 @@
                 //keep getting error when trying to show style name or shortName on page
                 // var beerStyle = beerResponse[i].style.name;
                 // console.log(beerStyle);
+                var beerLabel = beerResponse[i].labels.large;
 
-                html +=  '<div class="box"><h2>Beer Name: '+beerName+'</h2><br><h4>Description: '+beerDescription+'</h4><br><h4>IBU: '+beerIbu+'</h4><br><h4>ABV: '+beerAbv+'</h4><br><input type="button" id="sBeer" onclick="saveBeer(beerResponse)" value="Save"></div>';
+                html +=  '<div class="box"><img src='+beerLabel+'><br><h2>Beer Name: '+beerName+'</h2><br><h4>Description: '+beerDescription+'</h4><br><h4>IBU: '+beerIbu+'</h4><br><h4>ABV:'+beerAbv+'</h4><br><input type="button" id="sBeer" onclick="saveBeer(beerResponse)" value="Save"></div>';
 
 
                 document.getElementById('output1').innerHTML = html;
@@ -84,6 +74,7 @@
             function saveBeer(beerResponse){
               // console.log(beerResponse);
               console.log('save beer button pushed');
+              //need to push current beerResponse into the myBeers array
             }
 
 
