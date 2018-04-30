@@ -3,6 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>Find My Beer</title>
+
+    <!-- Fontawesome  -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+
     <!-- Styles -->
     <link rel="stylesheet" href="main.css">
 
@@ -60,7 +64,11 @@
                 //keep getting error when trying to show style name or shortName on page
                 // var beerStyle = beerResponse[i].style.name;
                 // console.log(beerStyle);
-                var beerLabel = beerResponse[i].labels.large;
+                var beerLabel = '';
+                if(beerResponse[i].labels == undefined){
+                  beerLabel = "http://via.placeholder.com/350x150";
+
+                }else{ beerLabel = beerResponse[i].labels.large;}
 
                 html +=  '<div class="box"><img src='+beerLabel+'><br><h2>Beer Name: '+beerName+'</h2><br><h4>Description: '+beerDescription+'</h4><br><h4>IBU: '+beerIbu+'</h4><br><h4>ABV:'+beerAbv+'</h4><br><input type="button" id="sBeer" onclick="saveBeer(beerResponse)" value="Save"></div>';
 
