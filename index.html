@@ -16,10 +16,18 @@
   <body>
 
     <h1>I Will Find My Beer</h1>
-    <div id="output">Beer</div>
+    <div id="output">Search for Beer by Name</div>
     <input type="text" id="searchBreweryDB">
     <input type="button" id="search" value="Find My Beer">
     <div id="output1"></div>
+
+    -- OR --
+    <h1>Find a Brewery</h1>
+    <div id="output3">Search for Brewery by Name</div>
+    <input type="text" id="searchForBrewery">
+    <input type="button" id="searchB" value="Find Brewery">
+    <div id="output4"></div>
+
   </body>
 
 
@@ -35,8 +43,10 @@
 
           function init(){
               document.getElementById('search').addEventListener('click',bSearch,false);
+              document.getElementById('searchB').addEventListener('click',ySearch,false);
           }
 
+//SEARCH FOR BEER BY SEARCH TERM
           function bSearch(){
               var searchTerm = document.getElementById('searchBreweryDB').value;
 
@@ -48,7 +58,7 @@
                  buildPage();
               })
           }
-
+// Wlt3TS   (crosseyed moose)
           function buildPage(){
             var html = "";
               for(var i = 0; i < beerResponse.length; i++){
@@ -78,6 +88,7 @@
 
               }
             }
+
             //this returns the entire search object by that term.. need to drill it down to the object to be saved (the one beer)
             function saveBeer(beerResponse){
               // console.log(beerResponse);
@@ -86,11 +97,21 @@
             }
 
 
+// SEARCH FOR BREWERY BY TERM
+          function ySearch(){
+              var searchBrewery = document.getElementById('searchForBrewery').value;
+
+              searchTerm = encodeURIComponent(searchBrewery);
+              var url = 'http://api.brewerydb.com/v2/search/?breweries&key=e2cf6d182fcd977a76875b349ab92f69&q='+searchBrewery;
+              getJSON(url,function(response){
+                 console.log(response.data);
+                 breweryResponse = response.data;
+                 // getBrewery();
+              })
+          }
 
 
-
-
-
+// http://api.brewerydb.com/v2/search/?breweries&key=e2cf6d182fcd977a76875b349ab92f69&q=odells
 
 
 
