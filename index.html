@@ -28,6 +28,11 @@
     <input type="button" id="searchB" value="Find Brewery">
     <div id="output4"></div>
 
+<!-- add this in as a footer w/sticky bottom -->
+<!-- <div id="breweryDBCred">
+  <img src="http://s3.amazonaws.com/brewerydb/Powered-By-BreweryDB.png" alt="BreweryDB">
+</div> -->
+
   </body>
 
 
@@ -58,7 +63,7 @@
                  buildPage();
               })
           }
-// Wlt3TS   (crosseyed moose)
+
           function buildPage(){
             var html = "";
               for(var i = 0; i < beerResponse.length; i++){
@@ -84,8 +89,6 @@
 
 
                 document.getElementById('output1').innerHTML = html;
-
-
               }
             }
 
@@ -106,12 +109,40 @@
               getJSON(url,function(response){
                  console.log(response.data);
                  breweryResponse = response.data;
-                 // getBrewery();
+                 getBrewery();
               })
           }
-
-
 // http://api.brewerydb.com/v2/search/?breweries&key=e2cf6d182fcd977a76875b349ab92f69&q=odells
+
+function getBrewery(){
+  var html = "";
+    for(var i = 0; i < breweryResponse.length; i++){
+      if(breweryResponse[i].type == "brewery"){
+      //need to create conditionals for beers that do not have undefined properties ("not available"?)
+      var breweryName = breweryResponse[i].name;
+      // console.log(beerName);
+      var breweryDescription = breweryResponse[i].description;
+      // console.log(beerDescription);
+      var breweryWebsite = breweryResponse[i].website;
+      // console.log(beerIbu);
+      var breweryEstablished = breweryResponse[i].established;
+      // console.log(beerAbv);
+      //keep getting error when trying to show style name or shortName on page
+      // var beerStyle = beerResponse[i].style.name;
+      // console.log(beerStyle);
+      var breweryImage = '';
+      if(breweryResponse[i].images == undefined){
+        breweryImage = "http://via.placeholder.com/350x150";
+
+      }else{ breweryImage = breweryResponse[i].images.large;}
+
+      html +=  '<div class="box"><img src='+breweryImage+'><br><h2>Brewery Name: '+breweryName+'</h2><br><h4>Description: '+breweryDescription+'</h4><br><h4>Website:<a target="_blank" href="'+breweryWebsite+'"> '+breweryWebsite+'</a></h4><br><h4>Established:'+breweryEstablished+'</h4><br><input type="button" id="sBrewery" onclick="saveBrewery(breweryResponse)" value="Save"></div>';
+
+
+      document.getElementById('output4').innerHTML = html;
+      }
+    }
+  }
 
 
 
