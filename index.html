@@ -88,21 +88,20 @@
                 // var currentBeer = {beerId,beerName,beerDescription,beerIbu,beerAbv,beerLabel};
                 // console.log(currentBeer);
 
-                html +=  '<div class="box"><img src='+beerLabel+'><br><h2>Beer Name: '+beerName+'</h2><br><h4>Description: '+beerDescription+'</h4><br><h4>IBU: '+beerIbu+'</h4><br><h4>ABV:'+beerAbv+'</h4><br><input type="button" onclick="saveBeer(beerResponse.id,beerResponse.name,beerResponse.description,beerResponse.ibu,beerResponse.abv)" id="sBeer" value="Save"></div>';
+                html +=  '<div class="box"><img src='+beerLabel+'><br><h2>Beer Name: '+beerName+'</h2><br><h4>Description: '+beerDescription+'</h4><br><h4>IBU: '+beerIbu+'</h4><br><h4>ABV:'+beerAbv+'</h4><br><input type="button" onclick="saveBeer(this.beerName)" id="sBeer" value="Save"></div>';
 
                 document.getElementById('output1').innerHTML = html;
 
             }
           }
-
+// gets the entire search object of beers:
+// onclick="saveBeer(beerResponse.id,beerResponse.name,beerResponse.description,beerResponse.ibu,beerResponse.abv)" id="sBeer" value="Save"></div>';
             function saveBeer(id,name,description,ibu,abv){
               console.log('save beer button pushed');
               //add target on info to grab?
-              // var savedBeer = currentBeer;
-              console.log(this.beerResponse);
-              // var holder = i;
-              // holder.push(beerName);
-              // console.log(holder);
+              // I can get the entire search w/this but need to get the beer info relative to the button clicked for save (to push to myBeers)... needs add addEventListener?
+              console.log(this);
+
             }
 
 
