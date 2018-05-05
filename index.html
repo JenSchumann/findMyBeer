@@ -45,6 +45,7 @@
   var output = document.getElementById('output1');
   var beerName = "";
   var myBeers = [];
+  // var currentBeer = {};
 
           function init(){
               document.getElementById('search').addEventListener('click',bSearch,false);
@@ -58,7 +59,8 @@
               searchTerm = encodeURIComponent(searchTerm);
               var url = 'http://api.brewerydb.com/v2/search/?beerId&key=e2cf6d182fcd977a76875b349ab92f69&q='+searchTerm;
               getJSON(url,function(response){
-                 console.log(response.data);
+
+                 // console.log(response.data);
                  beerResponse = response.data;
                  buildPage();
               })
@@ -68,14 +70,12 @@
             var html = "";
               for(var i = 0; i < beerResponse.length; i++){
                 //need to create conditionals for beers that do not have undefined properties ("not available"?)
+                var beerId = beerResponse[i].id;
                 var beerName = beerResponse[i].name;
-                // console.log(beerName);
                 var beerDescription = beerResponse[i].description;
-                // console.log(beerDescription);
                 var beerIbu = beerResponse[i].ibu;
-                // console.log(beerIbu);
                 var beerAbv = beerResponse[i].abv;
-                // console.log(beerAbv);
+
                 //keep getting error when trying to show style name or shortName on page
                 // var beerStyle = beerResponse[i].style.name;
                 // console.log(beerStyle);
@@ -85,18 +85,24 @@
 
                 }else{ beerLabel = beerResponse[i].labels.large;}
 
-                html +=  '<div class="box"><img src='+beerLabel+'><br><h2>Beer Name: '+beerName+'</h2><br><h4>Description: '+beerDescription+'</h4><br><h4>IBU: '+beerIbu+'</h4><br><h4>ABV:'+beerAbv+'</h4><br><input type="button" id="sBeer" onclick="saveBeer(beerResponse)" value="Save"></div>';
+                // var currentBeer = {beerId,beerName,beerDescription,beerIbu,beerAbv,beerLabel};
+                // console.log(currentBeer);
 
+                html +=  '<div class="box"><img src='+beerLabel+'><br><h2>Beer Name: '+beerName+'</h2><br><h4>Description: '+beerDescription+'</h4><br><h4>IBU: '+beerIbu+'</h4><br><h4>ABV:'+beerAbv+'</h4><br><input type="button" onclick="saveBeer(beerResponse.id,beerResponse.name,beerResponse.description,beerResponse.ibu,beerResponse.abv)" id="sBeer" value="Save"></div>';
 
                 document.getElementById('output1').innerHTML = html;
-              }
-            }
 
-            //this returns the entire search object by that term.. need to drill it down to the object to be saved (the one beer)
-            function saveBeer(beerResponse){
-              // console.log(beerResponse);
+            }
+          }
+
+            function saveBeer(id,name,description,ibu,abv){
               console.log('save beer button pushed');
-              //need to push current beerResponse into the myBeers array
+              //add target on info to grab?
+              // var savedBeer = currentBeer;
+              console.log(this.beerResponse);
+              // var holder = i;
+              // holder.push(beerName);
+              // console.log(holder);
             }
 
 
@@ -136,7 +142,7 @@ function getBrewery(){
 
       }else{ breweryImage = breweryResponse[i].images.large;}
 
-      html +=  '<div class="box"><img src='+breweryImage+'><br><h2>Brewery Name: '+breweryName+'</h2><br><h4>Description: '+breweryDescription+'</h4><br><h4>Website:<a target="_blank" href="'+breweryWebsite+'"> '+breweryWebsite+'</a></h4><br><h4>Established:'+breweryEstablished+'</h4><br><input type="button" id="sBrewery" onclick="saveBrewery(breweryResponse)" value="Save"></div>';
+      html +=  '<div class="box2"><img src='+breweryImage+'><br><h2>Brewery Name: '+breweryName+'</h2><br><h4>Description: '+breweryDescription+'</h4><br><h4>Website:<a target="_blank" href="'+breweryWebsite+'"> '+breweryWebsite+'</a></h4><br><h4>Established:'+breweryEstablished+'</h4><br><input type="button" id="sBrewery" onclick="saveBrewery(breweryResponse)" value="Save"></div>';
 
 
       document.getElementById('output4').innerHTML = html;
