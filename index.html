@@ -85,24 +85,30 @@
 
                 }else{ beerLabel = beerResponse[i].labels.large;}
 
-                // var currentBeer = {beerId,beerName,beerDescription,beerIbu,beerAbv,beerLabel};
+                //maybe add an attribute to this ?
+                var currentBeer = {beerId,beerName,beerDescription,beerIbu,beerAbv,beerLabel};
                 // console.log(currentBeer);
+                myBeers.push(currentBeer);
+                // console.log(myBeers);
 
-                html +=  '<div class="box"><img src='+beerLabel+'><br><h2>Beer Name: '+beerName+'</h2><br><h4>Description: '+beerDescription+'</h4><br><h4>IBU: '+beerIbu+'</h4><br><h4>ABV:'+beerAbv+'</h4><br><input type="button" onclick="saveBeer(this.beerName)" id="sBeer" value="Save"></div>';
+                html +=  '<div class="box" id="currentBeer"><img id="beerLabel" src='+beerLabel+'><br><h2>Beer Name: <span id="beerName">'+beerName+'</span></h2><br><h4>Description: <span id="beerDescription"> '+beerDescription+'</span></h4><br><h4>IBU: <span id="beerIbu">'+beerIbu+'</span></h4><br><h4>ABV: <span id="beerAbv"> '+beerAbv+'</span></h4><br><input type="button" onclick="saveBeer()" id="sBeer" value="Save"></div>';
 
                 document.getElementById('output1').innerHTML = html;
-
-            }
+              }
           }
-// gets the entire search object of beers:
-// onclick="saveBeer(beerResponse.id,beerResponse.name,beerResponse.description,beerResponse.ibu,beerResponse.abv)" id="sBeer" value="Save"></div>';
-            function saveBeer(id,name,description,ibu,abv){
-              console.log('save beer button pushed');
-              //add target on info to grab?
-              // I can get the entire search w/this but need to get the beer info relative to the button clicked for save (to push to myBeers)... needs add addEventListener?
-              console.log(this);
 
+
+
+            function thisBeer(){
+              console.log(myBeers);
             }
+// this function gets back the innerHTML & pushes it into an array (not JSON format)
+            // function addBeer(){
+            //   var bs = document.getElementById('currentBeer').innerText;
+            //   console.log(bs);
+            // }
+
+
 
 
 // SEARCH FOR BREWERY BY TERM
